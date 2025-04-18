@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Classification Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #FAEBD7;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 20px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Land Classification Prediction</h1>
+        <img src="static/img/land.png" alt="Land Classification"
+             style="max-width: 300px; vertical-align: middle; margin-top: 20px; margin-bottom: 20px;">
+        
+        <!-- Form to upload image for land classification prediction -->
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="imageInput" name="image" accept="image/*" required><br>
+            <button type="submit">Predict Land Classification</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const fileInput = document.getElementById('imageInput');
+            const resultDiv = document.getElementById('result');
+            
+            // Add the image file to the formData
+            formData.append('image', fileInput.files[0]);
+
+            // Display processing message while waiting for the result
+            resultDiv.innerHTML = 'Processing...';
+
+            // Send the image to the Flask backend via POST request
+            const response = await fetch('/land-identification', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Handle response and display result
+            if (response.ok) {
+                const data = await response.json();
+                resultDiv.innerHTML = `
+                    <h3>Predicted Land Class: <strong>${data.predicted_class}</strong></h3>
+                    <h3>Land Cover Map:</h3>
+                    <img src="data:image/png;base64,${data.prediction_image}" alt="Predicted Land Cover Map">
+                `;
+            } else {
+                resultDiv.innerHTML = 'Error occurred during prediction.';
+            }
+        }
+    </script>
+</body>
+</html>

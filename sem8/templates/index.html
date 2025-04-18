@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <title>Crop Recommendation Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .login-button {
+            position: absolute;
+            top: 20px; /* Adjust positioning */
+            right: 20px; /* Adjust positioning */
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none; /* Remove underline from link */
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .signup-button {
+            position: absolute;
+            top: 20px; /* Adjust positioning */
+            right: 150px; /* Adjust positioning */
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none; /* Remove underline from link */
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .signup-button:hover{
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .login-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>Welcome to EcoRestore</h1>
+                <img src="{{ url_for('static', filename='img/restore.png') }}" alt="EcoRestore Logo" class="sidebar-logo">
+            </div>
+            <a href="/login" class="login-button">Login</a>
+            <a href="/signup" class="signup-button">Signup</a>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="dashboard-header">
+                <p>A platform to help you analyze your land, identify soil quality, and make data-driven decisions to enhance your agricultural productivity.</p>
+            </header>
+
+            <!-- Crop Recommendation Section -->
+            <section id="crop-recommendation" class="content-section">
+                <h2>Crop Recommendation</h2>
+                <p>Analyze environmental factors to recommend the best crops for your land.</p>
+                <a href="/crop-recommendation">
+                    <button>Get Crop Recommendation</button>
+                </a>
+            </section>
+
+            <!-- Soil Quality Section -->
+            <section id="soil-quality" class="content-section">
+                <h2>Soil Quality</h2>
+                <p>Evaluate soil conditions to improve productivity.</p>
+                <a href="/predict-soil-type">
+                    <button>Analyze Soil Quality</button>
+                </a>
+            </section>
+
+            <!-- Land Identification Section -->
+            <section id="land-identification" class="content-section">
+                <h2>Land Identification</h2>
+                <p>Identify the best land for cultivation based on various factors.</p>
+                <a href="http://localhost:8501/">
+                    <button>Start Land Identification</button>
+                </a>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
